@@ -143,6 +143,19 @@ def print_dict(dictionary):
         print(dict)
 
 
+formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+
+def setup_logger(name, log_file, level):
+    #to setup individual logger
+    handler = logging.FileHandler(log_file)
+    handler.setFormatter(formatter)
+
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    logger.addHandler(handler)     
+
+    return logger
+
 #parsing functions to parse the data from the profile permission get from Org
 def parse_org_permission(profile, file, permission_list, LUT):
     #read csv permission matrix into df
@@ -204,7 +217,7 @@ def parse_matrix_csv(profile, matrix_file, permission_list, LUT, sheetname):
         except:
             print("Critical Error")
 
-def permission_compare(permission_list):
+def permission_compare(permission_list, logger):
     for profile in permission_list:
         print("Compare profile: ", profile[0])
         org_list = profile[1]
@@ -212,27 +225,27 @@ def permission_compare(permission_list):
         for (org, matrix) in zip(org_list, matrix_list):
             if org['C'] != matrix['C']:
                 print("[",profile[0],"]","Mismatch in Create for ", org['name'], ".Should be", matrix['C'])
-                logging.info('[{}] Mistmatch in Create for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] Mistmatch in Create for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
             
             if org['R'] != matrix['R']:
                 print("[",profile[0],"]", "Mismatch in Read for ", org['name'], ".Should be", matrix['R'])
-                logging.info('[{}] Mistmatch in Read for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] Mistmatch in Read for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
 
             if org['U'] != matrix['U']:
                 print("[",profile[0],"]", "Mismatch in Update/Edit for ", org['name'], ".Should be", matrix['U'])
-                logging.info('[{}] Mistmatch in Update/Edit for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] Mistmatch in Update/Edit for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
 
             if org['D'] != matrix['D']:
                 print("[",profile[0],"]", "Mismatch in Delete for ", org['name'], ".Should be", matrix['D'])
-                logging.info('[{}] Mistmatch in Delete for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] Mistmatch in Delete for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
 
             if org['MA'] != matrix['MA']:
                 print("[",profile[0],"]", "Mismatch in Modify All for ", org['name'], ".Should be", matrix['MA'])
-                logging.info('[{}] Mistmatch in Modify All for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] Mistmatch in Modify All for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
 
             if org['VA'] != matrix['VA']:
                 print("[",profile[0],"]", "Mismatch in View All for ", org['name'], ".Should be", matrix['VA'])
-                logging.info('[{}] Mistmatch in View All for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] Mistmatch in View All for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
 
 
 
@@ -242,11 +255,12 @@ def main():
     #create log file with current date as file name
     current_datetime = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
     str_current_datetime = str(current_datetime)
-    file_name = str_current_datetime+".txt"
+    p1_file_name = str_current_datetime+ "_p1" + ".txt"
+    p2_file_name = str_current_datetime+ "_p2" + ".txt"
     
     #setup logging module
-    logging.basicConfig(filename=file_name, level=logging.INFO)
-    logging.debug("Script Started")
+    p1_logger = setup_logger('P1 Objects Logger', p1_file_name, logging.INFO)
+    p2_logger = setup_logger('P2 Objects Logger', p2_file_name, logging.INFO)
 
     #loop through all profiles
     for profile in profile_LUT:
@@ -290,9 +304,9 @@ def main():
 
     #compare all profile in the permission list:
     print("P1 RESULT:")
-    permission_compare(profile_permission_p1)
+    permission_compare(profile_permission_p1, p1_logger)
     print("P2 RESULT:")
-    permission_compare(profile_permission_p2)
+    permission_compare(profile_permission_p2, p2_logger)
 
 if __name__ == "__main__":
     main()
