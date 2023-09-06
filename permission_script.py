@@ -152,9 +152,21 @@ def setup_logger(name, log_file, level):
 
     logger = logging.getLogger(name)
     logger.setLevel(level)
+
+    #adding file handler to output to file
     logger.addHandler(handler)     
 
+    stream = logging.StreamHandler()
+    stream.setLevel(level)
+    streamformat = logging.Formatter("%(asctime)s:%(levelname)s:%(message)s")
+    stream.setFormatter(streamformat)
+
+    #adding stream handler to output to console
+    logger.addHandler(stream)
+
     return logger
+
+
 
 #parsing functions to parse the data from the profile permission get from Org
 def parse_org_permission(profile, file, permission_list, LUT):
@@ -224,27 +236,21 @@ def permission_compare(permission_list, logger):
         matrix_list = profile[2]
         for (org, matrix) in zip(org_list, matrix_list):
             if org['C'] != matrix['C']:
-                print("[",profile[0],"]","Mismatch in Create for ", org['name'], ".Should be", matrix['C'])
                 logger.info('[{}] Mistmatch in Create for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
             
             if org['R'] != matrix['R']:
-                print("[",profile[0],"]", "Mismatch in Read for ", org['name'], ".Should be", matrix['R'])
                 logger.info('[{}] Mistmatch in Read for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
 
             if org['U'] != matrix['U']:
-                print("[",profile[0],"]", "Mismatch in Update/Edit for ", org['name'], ".Should be", matrix['U'])
                 logger.info('[{}] Mistmatch in Update/Edit for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
 
             if org['D'] != matrix['D']:
-                print("[",profile[0],"]", "Mismatch in Delete for ", org['name'], ".Should be", matrix['D'])
                 logger.info('[{}] Mistmatch in Delete for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
 
             if org['MA'] != matrix['MA']:
-                print("[",profile[0],"]", "Mismatch in Modify All for ", org['name'], ".Should be", matrix['MA'])
                 logger.info('[{}] Mistmatch in Modify All for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
 
             if org['VA'] != matrix['VA']:
-                print("[",profile[0],"]", "Mismatch in View All for ", org['name'], ".Should be", matrix['VA'])
                 logger.info('[{}] Mistmatch in View All for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
 
 
@@ -303,9 +309,9 @@ def main():
                                       matrix_permission_list])
 
     #compare all profile in the permission list:
-    print("P1 RESULT:")
+    p1_logger.info("P1 RESULT:")
     permission_compare(profile_permission_p1, p1_logger)
-    print("P2 RESULT:")
+    p2_logger.info("P2 RESULT:")
     permission_compare(profile_permission_p2, p2_logger)
 
 if __name__ == "__main__":
