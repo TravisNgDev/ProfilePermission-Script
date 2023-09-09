@@ -236,22 +236,22 @@ def permission_compare(permission_list, logger):
         matrix_list = profile[2]
         for (org, matrix) in zip(org_list, matrix_list):
             if org['C'] != matrix['C']:
-                logger.info('[{}] Mistmatch in Create for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] [{}] Create in Orge {}. Create in matrix {}'.format(profile[0], org['name'], org['C'], matrix['C']))
             
             if org['R'] != matrix['R']:
-                logger.info('[{}] Mistmatch in Read for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] [{}] Read in Orge {}. Read in matrix {}'.format(profile[0], org['name'], org['R'], matrix['R']))
 
             if org['U'] != matrix['U']:
-                logger.info('[{}] Mistmatch in Update/Edit for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] [{}] Update in Orge {}. Update in matrix {}'.format(profile[0], org['name'], org['U'], matrix['U']))
 
             if org['D'] != matrix['D']:
-                logger.info('[{}] Mistmatch in Delete for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] [{}] Delete in Orge {}. Delete in matrix {}'.format(profile[0], org['name'], org['D'], matrix['D']))
 
             if org['MA'] != matrix['MA']:
-                logger.info('[{}] Mistmatch in Modify All for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] [{}] Modify All in Orge {}. Modify All in matrix {}'.format(profile[0], org['name'], org['MA'], matrix['MA']))
 
             if org['VA'] != matrix['VA']:
-                logger.info('[{}] Mistmatch in View All for {}. Should be {}'.format(profile[0], org['name'], matrix['C']))
+                logger.info('[{}] [{}] View All in Orge {}. View All in matrix {}'.format(profile[0], org['name'], org['VA'], matrix['VA']))
 
 
 
