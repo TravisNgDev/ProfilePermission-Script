@@ -4,6 +4,7 @@ from datetime import datetime
 import regex as re
 import pandas as pd
 from openpyxl import load_workbook
+import os
 
 profile_LUT = [
     "Admin - Program Support",
@@ -236,27 +237,35 @@ def permission_compare(permission_list, logger):
         matrix_list = profile[2]
         for (org, matrix) in zip(org_list, matrix_list):
             if org['C'] != matrix['C']:
-                logger.info('[{}] [{}] Create in Orge {}. Create in matrix {}'.format(profile[0], org['name'], org['C'], matrix['C']))
+                logger.info('[{}] [{}] Create in Org {}. Create in matrix {}'.format(profile[0], org['name'], org['C'], matrix['C']))
             
             if org['R'] != matrix['R']:
-                logger.info('[{}] [{}] Read in Orge {}. Read in matrix {}'.format(profile[0], org['name'], org['R'], matrix['R']))
+                logger.info('[{}] [{}] Read in Org {}. Read in matrix {}'.format(profile[0], org['name'], org['R'], matrix['R']))
 
             if org['U'] != matrix['U']:
-                logger.info('[{}] [{}] Update in Orge {}. Update in matrix {}'.format(profile[0], org['name'], org['U'], matrix['U']))
+                logger.info('[{}] [{}] Update in Org {}. Update in matrix {}'.format(profile[0], org['name'], org['U'], matrix['U']))
 
             if org['D'] != matrix['D']:
-                logger.info('[{}] [{}] Delete in Orge {}. Delete in matrix {}'.format(profile[0], org['name'], org['D'], matrix['D']))
+                logger.info('[{}] [{}] Delete in Org {}. Delete in matrix {}'.format(profile[0], org['name'], org['D'], matrix['D']))
 
             if org['MA'] != matrix['MA']:
-                logger.info('[{}] [{}] Modify All in Orge {}. Modify All in matrix {}'.format(profile[0], org['name'], org['MA'], matrix['MA']))
+                logger.info('[{}] [{}] Modify All in Org {}. Modify All in matrix {}'.format(profile[0], org['name'], org['MA'], matrix['MA']))
 
             if org['VA'] != matrix['VA']:
-                logger.info('[{}] [{}] View All in Orge {}. View All in matrix {}'.format(profile[0], org['name'], org['VA'], matrix['VA']))
+                logger.info('[{}] [{}] View All in Org {}. View All in matrix {}'.format(profile[0], org['name'], org['VA'], matrix['VA']))
 
 
 
 #main loop of the program
 def main():
+
+    #delete old log
+    dir_name = os.getcwd()
+    folder = os.listdir(dir_name)
+   
+    for file in folder:
+        if file.endswith(".txt"):
+            os.remove(os.path.join(dir_name, file))
 
     #create log file with current date as file name
     current_datetime = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
