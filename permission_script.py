@@ -5,6 +5,7 @@ import regex as re
 import pandas as pd
 from openpyxl import load_workbook
 import os
+import fire
 
 profile_LUT = [
     "Admin - Program Support",
@@ -124,6 +125,20 @@ object_LUT = [
     "DCD_Related_Contact_History__c",
     "DCD_TDI_21s__c",
     "R_S_Error_Report__c",
+]
+
+disabled_flow = [
+    "Account_Trigger_Handler",
+    "Case_Case_Number_Numeric_Update",
+    "Create_SCF_in_Party",
+    "DCD_Complaints_Mapping_Field",
+    "DCD_Coverage_Check_and_Update_WC_Status",
+    "List_of_Ended_Cases_Report",
+    "Non_compliant_Employer_Insurance_Information_Report",
+    "Public_Portal_File_Upload",
+    "TDI_SFC_File_Upload",
+    "Update_Related_Account_on_update_Coverage",
+    "WC_3_Trigger_Handler_Schedule",
 ]
 
 #update the file name to be the corrected one
@@ -257,15 +272,7 @@ def permission_compare(permission_list, logger):
 
 
 #main loop of the program
-def main():
-
-    #delete old log
-    dir_name = os.getcwd()
-    folder = os.listdir(dir_name)
-   
-    for file in folder:
-        if file.endswith(".txt"):
-            os.remove(os.path.join(dir_name, file))
+def main_permission():
 
     #create log file with current date as file name
     current_datetime = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
@@ -323,7 +330,42 @@ def main():
     p2_logger.info("P2 RESULT:")
     permission_compare(profile_permission_p2, p2_logger)
 
+def main_flows():
+    #create log file with current date as file name
+    current_datetime = datetime.now().strftime("%Y-%m-%d %H-%M-%S")
+    str_current_datetime = str(current_datetime)
+    flows_file_name = str_current_datetime+ "_flows" + ".txt"
+    
+    #setup logging module
+    flows_logger = setup_logger('Flows Logger', flows_file_name, logging.INFO)
+    flows_logger.debug("Check flow activation")
+
+    flow_csv = "DCD_Flow_2.52.1_3.26.0.csv"
+    raw_flow_data = pd.read_csv(flow_csv)
+    reduced_flow_df = raw_flow_data.drop(columns=["Id", "Label", "TriggerType", "IsOutOfDate"])
+
+    for idx in range (len(reduced_flow_df)):
+        flow_name = reduced_flow_df.iloc[idx, 0]
+        is_active = reduced_flow_df.iloc[idx, 1]
+        if flow_name in disabled_flow and is_active == True:
+            flows_logger.info('[{}] flow should be disabled'.format(flow_name))
+        elif flow_name not in disabled_flow and is_active == False:
+            flows_logger.info('[{}] flow should be activated'.format(flow_name))
+
+
 if __name__ == "__main__":
-    main()
+
+    #delete old log
+    dir_name = os.getcwd()
+    folder = os.listdir(dir_name)
+   
+    for file in folder:
+        if file.endswith(".txt"):
+            os.remove(os.path.join(dir_name, file))
+
+    fire.Fire({
+        'permission': main_permission,
+        'flows': main_flows,
+    })
     
 
