@@ -129,7 +129,7 @@ object_LUT = [
 #update the file name to be the corrected one
 org_permission_file = "org_permission.csv"
 #update the file nem to be the corrected one
-matrix_file = "DCDeCMS_CaseMgmt_Permission Matrix_P2_20230710_ver7.0.xlsx"
+matrix_file = "DCDeCMS_CaseMgmt_Permission Matrix_P2_20230710_ver7.1.xlsx"
 
 profile_permission_p1 = []
 profile_permission_p2 = []
