@@ -144,7 +144,7 @@ disabled_flow = [
 #update the file name to be the corrected one
 org_permission_file = "org_permission.csv"
 #update the file nem to be the corrected one
-matrix_file = "DCDeCMS_CaseMgmt_Permission Matrix_P2_20230710_ver7.1.xlsx"
+matrix_file = "DCDeCMS_CaseMgmt_Permission Matrix_P2_20230817_ver7.3.xlsx"
 
 profile_permission_p1 = []
 profile_permission_p2 = []
@@ -340,9 +340,9 @@ def main_flows():
     flows_logger = setup_logger('Flows Logger', flows_file_name, logging.INFO)
     flows_logger.debug("Check flow activation")
 
-    flow_csv = "DCD_Flow_2.52.1_3.26.0.csv"
+    flow_csv = "DCD_Flow.csv"
     raw_flow_data = pd.read_csv(flow_csv)
-    reduced_flow_df = raw_flow_data.drop(columns=["Id", "Label", "TriggerType", "IsOutOfDate"])
+    reduced_flow_df = raw_flow_data.drop(columns=["Id", "Label", "TriggerType", "IsOutOfDate", "_"])
 
     for idx in range (len(reduced_flow_df)):
         flow_name = reduced_flow_df.iloc[idx, 0]
