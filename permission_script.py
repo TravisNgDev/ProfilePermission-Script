@@ -342,16 +342,20 @@ def main_flows():
 
     flow_csv = "DCD_Flow.csv"
     raw_flow_data = pd.read_csv(flow_csv)
-    reduced_flow_df = raw_flow_data.drop(columns=["Id", "Label", "TriggerType", "IsOutOfDate", "_"])
+    reduced_flow_df = raw_flow_data.drop(columns=["Id", "Label", "TriggerType", "_"])
 
     for idx in range (len(reduced_flow_df)):
         flow_name = reduced_flow_df.iloc[idx, 0]
         is_active = reduced_flow_df.iloc[idx, 1]
+        is_out_of_date = reduced_flow_df.iloc[idx, 2]
         if flow_name in disabled_flow and is_active == True:
             flows_logger.info('[{}] flow should be disabled'.format(flow_name))
-        elif flow_name not in disabled_flow and is_active == False:
-            flows_logger.info('[{}] flow should be activated'.format(flow_name))
-
+        elif flow_name not in disabled_flow:
+            if is_active == False:
+                flows_logger.info('[{}] flow should be activated'.format(flow_name))
+            else:
+                if(is_out_of_date == True):
+                    flows_logger.info('[{}] flows is not running the latest version'.format(flow_name))
 
 if __name__ == "__main__":
 
