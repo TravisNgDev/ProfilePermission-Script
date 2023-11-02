@@ -144,7 +144,7 @@ disabled_flow = [
 #update the file name to be the corrected one
 org_permission_file = "org_permission.csv"
 #update the file nem to be the corrected one
-matrix_file = "DCDeCMS_CaseMgmt_Permission Matrix_P2_20230817_ver7.3.xlsx"
+matrix_file = "DCDeCMS_CaseMgmt_Permission Matrix_P2_20230817_ver7.4.xlsx"
 
 profile_permission_p1 = []
 profile_permission_p2 = []
