@@ -3,3 +3,4 @@
 *.xlsx
 *.txt
 !requirements.txt
+.vscode
