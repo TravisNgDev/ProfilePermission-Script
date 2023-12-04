@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
-<credential>
-    <user_name>phuoc.huynh@dlir.dcd</user_name>
-    <password>DCD@12345</password>
-    <security_token>xd6zjaMP0k9gpo4tOV9l0zrCN</security_token>
-</credential>
+<root>
+    <credential>
+        <user_name>phuoc.huynh@dlir.dcd</user_name>
+        <password>DCD@12345</password>
+        <security_token>xd6zjaMP0k9gpo4tOV9l0zrCN</security_token>
+    </credential>
+    <permission_matrix>
+        <version>DCDeCMS_CaseMgmt_Permission Matrix_P2_20230817_ver7.7.xlsx</version>
+    </permission_matrix>
+</root>

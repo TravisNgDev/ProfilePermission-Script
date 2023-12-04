@@ -1,4 +1,4 @@
-import xml.dom.minidom
+import xml.dom.minidom as md
 import logging
 from datetime import datetime
 import regex as re
@@ -144,7 +144,10 @@ disabled_flow = [
 #update the file name to be the corrected one
 org_permission_file = "org_permission.csv"
 #update the file nem to be the corrected one
-matrix_file = "DCDeCMS_CaseMgmt_Permission Matrix_P2_20230817_ver7.7.xlsx"
+#get the configuration file
+root = md.parse("config.xml")
+permission_config = root.getElementsByTagName("permission_matrix")[0]
+matrix_file = permission_config.getElementsByTagName("version")[0].firstChild.nodeValue
 
 profile_permission_p1 = []
 profile_permission_p2 = []
