@@ -139,6 +139,9 @@ disabled_flow = [
     "TDI_SFC_File_Upload",
     "Update_Related_Account_on_update_Coverage",
     "WC_3_Trigger_Handler_Schedule",
+    "WC_Carrier_Handler",
+    "DCD_TDI_62_Update_the_status_of_form_when_Action_taken_is_change",
+    "WC Coverage Check Prior WC Status"
 ]
 
 #update the file name to be the corrected one
