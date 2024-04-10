@@ -130,6 +130,7 @@ object_LUT = [
 disabled_flow = [
     "Account_Trigger_Handler",
     "Case_Case_Number_Numeric_Update",
+    "Create_Party_Name_And_Address_Record",
     "Create_SCF_in_Party",
     "DCD_Complaints_Mapping_Field",
     "DCD_Coverage_Check_and_Update_WC_Status",
@@ -137,11 +138,14 @@ disabled_flow = [
     "Non_compliant_Employer_Insurance_Information_Report",
     "Public_Portal_File_Upload",
     "TDI_SFC_File_Upload",
+    "Delete_Hearing_Type",
+    "Delete_Hearing_Type_Platform",
     "Update_Related_Account_on_update_Coverage",
     "WC_3_Trigger_Handler_Schedule",
     "WC_Carrier_Handler",
     "DCD_TDI_62_Update_the_status_of_form_when_Action_taken_is_change",
-    "WC Coverage Check Prior WC Status"
+    "WC_Coverage_Check_Prior_WC_Status",
+    "WC_Coverage_Check_Effective_Date_change_Status"
 ]
 
 #update the file name to be the corrected one
