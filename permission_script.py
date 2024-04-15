@@ -129,6 +129,7 @@ object_LUT = [
 
 disabled_flow = [
     "Account_Trigger_Handler",
+    "Autolaunched_Set_Contact_Masked_Fields",
     "Case_Case_Number_Numeric_Update",
     "Create_Party_Name_And_Address_Record",
     "Create_SCF_in_Party",
@@ -145,7 +146,16 @@ disabled_flow = [
     "WC_Carrier_Handler",
     "DCD_TDI_62_Update_the_status_of_form_when_Action_taken_is_change",
     "WC_Coverage_Check_Prior_WC_Status",
-    "WC_Coverage_Check_Effective_Date_change_Status"
+    "WC_Coverage_Check_Effective_Date_change_Status",
+    "Account_Master_PB",
+    "Award_Employment_Master",
+    "Award_Worksheet_Master",
+    "Case_Settlement_Master2",
+    "Contact_Master",
+    "DCD_Special_Fund_Case_Master",
+    "TDI_Cases",
+    "TDI_Special_Fund_Cases",
+    "encrypted_contact"
 ]
 
 #update the file name to be the corrected one
